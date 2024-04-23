@@ -4,8 +4,9 @@
 
 <div class="card shadow-sm">
   <div class="card-body">
-    <a href="{{route('category-book.create')}}"> <button class="btn btn-primary mb-3">Buat Kategori Buku</button>
-    </a>
+    <a href="{{route('category-book.create')}}"> <button class="btn btn-primary mb-3">Buat Kategori Buku</button>   </a>
+    <a href="/export-category-book"> <button class="btn btn-info">Unduh Data</button></a>
+ 
     @if(Session::get('success'))
     <div class="alert alert-success">
       {{session('success')}}

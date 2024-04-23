@@ -13,6 +13,8 @@
                     <img src="{{ asset('assets/upload/' . $data->cover) }}" class="img-fluid" alt="">
                     <h4 class="font-weight-bold mt-3">{{ $data->judul }}</h4>
                     <p> Penulis: <span class="font-weight-bold">{{ $data->penulis }}</span></p>
+                    <p> Tahun Terbit: <span class="font-weight-bold">{{ $data->tahun_terbit }}</span></p>
+                    <p>Deskripsi: <span class="font-weight-bold">{{ $data->deskripsi }}</span></p>
                 </div>
             </div>
         </div>
@@ -22,6 +24,8 @@
                     <h1>{{ $data->judul }}</h1>
                     <p>Penulis: {{ $data->penulis }}</p>
                     <p>Penerbit: {{ $data->penerbit }}</p>
+                    <p>Tahun Terbit: {{ $data->tahun_terbit }}</p>
+                    <p>Deskripsi: {{ $data->deskripsi }}</p>
                 </div>
             </div>
             <div class="card">
@@ -46,7 +50,7 @@
                                 </svg>
                             @endfor
                         </div>
-                        <span class="badge text-bg-info mb-3">{{ $item->user->nama }}</span>
+                        <span class="badge text-bg-info mb-3">{{ $item->user->name }}</span>
 
                         <p>{{ $item->ulasan }}</p>
                     </div>
@@ -116,7 +120,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </form>

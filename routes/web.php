@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PustakaController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowedController;
 use App\Http\Controllers\KoleksiController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\CategoryBookController;
 
 /*
@@ -31,15 +33,22 @@ Route::middleware('isLogin')->group(function () {
     Route::middleware('checkRole:admin')->group(function () {
         Route::resource('/category-book', CategoryBookController::class);
         Route::resource('/book', BookController::class);
-     
         Route::get('/delete-user/{id}', [AuthController::class, 'userDestroy'])->name('user.destroy');
+
+        Route::resource('/ulasan', UlasanController::class);
+        //export
+        Route::get('/export-category-book', [CategoryBookController::class, 'exportCategoryBook']);
+        Route::get('/export-book', [BookController::class, 'exportBook']);
+        Route::get('/export-borrowed', [BorrowedController::class, 'exportBorrowed'])->name('export-borrowed');
+        Route::get('/export-user', [UserController::class, 'exportUser'])->name('export-user');
+
     });
 
 
     Route::middleware('checkRole:user,admin,petugas')->group(function () {
-        Route::get('/books', [BookController::class, "showBook"])->name('books');
-        Route::get('/books/download', [BookController::class, "exportBook"])->name('export.book');
-        Route::get('/book/detail/{slug}', [BookController::class, 'detailBook'])->name('detail.book');
+    // Route::get('pustaka/{buku}', [PustakaController::class, 'show'])->name('pustaka.show');
+        Route::get('/books', [BookController::class, 'showBook'])->name('show.books');
+        Route::get('/book/detail/{slug}', [BookController::class, 'detailBook'])->name('borrowed.detail-book');
 
         // borrow book 
         Route::get('/peminjaman', [BorrowedController::class, 'index'])->name('peminjaman.index');
@@ -47,7 +56,9 @@ Route::middleware('isLogin')->group(function () {
 
         Route::patch('/return/{id}', [BorrowedController::class, 'returnBook'])->name('return.book');
         Route::get('/collection', [KoleksiController::class, 'index'])->name('collection.index');
-        Route::post('/add-collection', [KoleksiController::class, 'store'])->name('collection.store');
+        Route::delete('/koleksi-hapus/{id}', [KoleksiController::class, 'destroy'])->name('koleksiHapus');
+        Route::post('/add-collection', [KoleksiController::class, 'store'])->name('koleksi-book.store');
+
     });
 
 });

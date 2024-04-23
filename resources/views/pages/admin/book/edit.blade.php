@@ -40,6 +40,10 @@
         <label for="exampleInputEmail1" class="form-label">Tahun Terbit</label>
         <input type="text" value="{{$data->tahun_terbit}}" name="tahun_terbit" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
       </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Tanggal</label>
+        <input type="dateTime" value="{{$data->tanggal}}" name="tanggal" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
       <label for="exampleInputEmail1" class="form-label">Cover</label>
       <div class="input-group mb-2">
         <input type="file" value="{{$data->cover}}" name="cover" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
@@ -54,6 +58,10 @@
           <img class="img-preview img-fluid">
       </div>
       @endif
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
+        <input type="text" value="{{$data->deskripsi}}" name="deskripsi" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
       <button type="submit" class="btn btn-primary mt-5">Kirim</button>
     </form>
   </div>

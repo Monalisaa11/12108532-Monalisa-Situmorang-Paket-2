@@ -30,6 +30,10 @@ class Book extends Model
     public function books(){
         return $this->hasMany(CategoryBook::class, 'category_book_id');
         }
+
+        public function search(){
+            return $this->hasMany(Search::class);
+            }
         
     public function isAvailableForBorrowing()
     {

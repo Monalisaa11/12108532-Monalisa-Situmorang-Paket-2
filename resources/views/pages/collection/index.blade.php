@@ -36,6 +36,14 @@
           <td>{{$data->books->penulis}}</td>
           <td>{{$data->books->penerbit}}</td>
           <td>{{$data->books->tahun_terbit}}</td>
+          <td>
+                                <form action="{{route('koleksiHapus', ['id' => $data->id])}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-dark">Hapus Koleksi</button>
+                                </form>
+                            </td>
+</td>
         </tr>
         @endforeach
 

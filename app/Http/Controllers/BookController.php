@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Borrowed;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use App\Models\Ulasan;
 use App\Models\CategoryBook;
 use Illuminate\Http\Request;
 
@@ -30,7 +30,9 @@ class BookController extends Controller
             'penulis' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required',
+            'tanggal' => 'required',
             'cover' => 'required',
+            'deskripsi' => 'required',
             
         ]);
 
@@ -50,9 +52,13 @@ class BookController extends Controller
             'penulis' =>  $request->penulis,
             'penerbit' => $request->penerbit,
             'tahun_terbit' => $request->tahun_terbit,
+            'tanggal' => now(),
             'cover' => $uploaded,
+            'deskripsi' => $request->deskripsi,
             'slug' => Str::slug($request->judul),
-            'available' => true
+            'available' => true,
+           
+          
         ]);
 
         return redirect()->route('book.index')->with('success', 'Galeri Berhasil Ditambah!');
@@ -76,6 +82,8 @@ class BookController extends Controller
             'penulis' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required',
+            'tanggal' => 'required',
+            'deskripsi' => 'required',
         ]);
 
         if ($request->hasFile('cover')) {
@@ -84,7 +92,7 @@ class BookController extends Controller
             $lokasi = public_path('assets/upload/');
             $gambar->move($lokasi, $nama_gambar);
 
-            // mengambil data terbaru dari tabel
+          
             $data = Book::where('id', $id)->first();
             $file_path = public_path('assets/upload/' . $data->cover);
             if (file_exists($file_path)) {
@@ -128,10 +136,13 @@ class BookController extends Controller
         return view('pages.borrowed.index');
     }
 
-    function detailBook($slug)
+    public function detailBook($slug)
     {
-        $book = Book::where('slug', $slug)->first();
-        return view('pages.borrowed.detail-book', compact('book'));
+        $data = Book::where('slug', $slug)->first();
+        $ulasans = Ulasan::with('user')->where('book_id', $data->slug)->latest()->get();
+    
+
+        return view('pages.borrowed.detail-book', compact('data' , 'ulasans'));
     }
 
     function showBook()
@@ -140,11 +151,20 @@ class BookController extends Controller
 
         return view('pages.borrowed.show-book', compact('datas'));
     }
-    
+     
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    // Lakukan pencarian data berdasarkan query
+    $results = Book::where('column', 'like', '%' . $query . '%')->get();
+
+    return view('search-results', ['results' => $results]);
+}
 
     function exportBook(){
-        $data['books'] = Book::all();
-        $pdf = Pdf::loadView('download-book', $data);
+        $data['book'] = Book::all();
+        $pdf = Pdf::loadView('book', $data);
         return $pdf->download('Book-data.pdf');
     }
 

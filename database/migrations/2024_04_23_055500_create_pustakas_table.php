@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('borroweds', function (Blueprint $table) {
+        Schema::create('pustakas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('book_id');
-            $table->string('tanggal_peminjaman')->nullable();
-            $table->string('tanggal_pengembalian')->nullable();
-            $table->string('status')->nullable()->default('dipinjam');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('borroweds');
+        Schema::dropIfExists('pustakas');
     }
 };

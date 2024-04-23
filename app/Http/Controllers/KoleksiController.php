@@ -40,4 +40,11 @@ class KoleksiController extends Controller
 
         return redirect('/collection')->with('success', 'Berhasil menambahkan koleksi buku.');
     }
+    public function destroy($id)
+    {
+        $data = Koleksi::findOrFail($id);
+        $data->delete();
+
+        return redirect('collection')->with('status', 'berhasil hapus data');
+    }
 }

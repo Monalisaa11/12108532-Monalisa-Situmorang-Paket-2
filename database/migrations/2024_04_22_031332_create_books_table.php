@@ -20,10 +20,11 @@ return new class extends Migration
             $table->string('penulis');
             $table->string('penerbit');
             $table->string('tahun_terbit');
+            $table->dateTime('tanggal');
             $table->string('cover');
+            $table->text('deskripsi');
             $table->string('slug');
-            $table->boolean('available');
-
+            $table->boolean('Available')->default(true);
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -102,5 +103,11 @@ class UserController extends Controller
         $data = User::find($id);
         $data->delete();
         return redirect()->route('user-akun.index')->with("success", "Berhasil hapus data");
+    }
+
+    function exportUser(){
+        $data['user'] = User::all();
+        $pdf = Pdf::loadView('user', $data);
+        return $pdf->download('user-data.pdf');
     }
 }

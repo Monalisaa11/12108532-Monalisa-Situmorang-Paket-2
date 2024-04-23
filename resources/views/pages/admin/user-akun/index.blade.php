@@ -4,6 +4,7 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <a href="{{ route('user-akun.create') }}"> <button class="btn btn-primary mb-3">Tambah User</button>
+            <a href="{{route('export-user')}}"> <button class="btn btn-info">Unduh Data</button></a>
             </a>
             <table class="table">
                 <thead>

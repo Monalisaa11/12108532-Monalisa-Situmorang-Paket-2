@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryBook;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class CategoryBookController extends Controller
@@ -66,5 +66,11 @@ class CategoryBookController extends Controller
         $data = CategoryBook::find($id);
         $data->delete();
         return redirect()->route('category-book.index')->with("success", "Berhasil hapus data");
+    }
+
+    function exportCategoryBook(){
+        $data['category_books'] = CategoryBook::all();
+        $pdf = Pdf::loadView('category', $data);
+        return $pdf->download('category-book-data.pdf');
     }
 }

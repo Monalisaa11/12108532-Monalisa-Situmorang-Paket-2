@@ -25,11 +25,10 @@
       <tbody>
         @foreach ($datas as $data)
         <tr>
-            
           <td scope="row">{{$loop->iteration}}</td>
           <td><img src="{{asset('assets/upload/'.$data->books->cover)}}" width="100px" alt=""></td>
           <td>{{$data->books->judul}}</td>
-          <td>{{$data->status}}</td>
+          <td>{{$data->books->status}}</td>
           <td>{{$data->tanggal_peminjaman}}</td>
           <td>{{$data->tanggal_pengembalian}}</td>
 

@@ -34,24 +34,25 @@ class UlasanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+  public function store(Request $request){
         $request->validate([
-            'ulasan' => 'required', 
-            'rating' => 'required'
-        ]); 
-
-        
-        Ulasan::create([
-            'user_id' => Auth::user()->id, 
-            'buku_id' => $request->buku_id, 
-            'ulasan' => $request->ulasan, 
-            'rating' => $request->rating
+            'user_id' => 'required',
+            'book_id' => 'required',
+            'ulasan' => 'required',
+            'rating' => 'required',
         ]);
+
+        Ulasan::create([
+            'user_id' => $request->input('user_id'),
+            'book_id' => $request->input('book_id'),
+            'ulasan' => $request->input('ulasan'),
+            'rating' => $request->input('rating'),
+        ]);
+
+        return redirect()->route('ulasan.index')->with('success', 'Ulasan berhasil ditambahkan.');
+    }
         // dd($request->all());
 
-        return back()->with('status', "berhasil menambahkan komentar");
-    }
 
     /**
      * Display the specified resource.

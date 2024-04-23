@@ -4,22 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Borrowed;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BorrowedController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $datas = Borrowed::with('books')->where('user_id', Auth::user()->id)->get();
         return view('pages.borrowed.index', compact('datas'));
     }
+
 
     function borrowBook($slug)
     {
@@ -32,6 +31,7 @@ class BorrowedController extends Controller
             'book_id' => $book->id,
             'user_id' => Auth::user()->id,
             'tanggal_peminjaman' => now()->toDateString(),
+            'tanggal_pengembalian' => now()->toDateString(),
             'status' => 'dipinjam',
         ]);
 
@@ -40,9 +40,9 @@ class BorrowedController extends Controller
 
     function returnBook($id)
     {
-        $borrowed =  Borrowed::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $borrowed = Borrowed::where('id', $id)->where('user_id', Auth::user()->id)->first();
 
-        $book = Book::where('id', $borrowed->book_id); 
+        $book = Book::where('id', $borrowed->book_id);
         $book->update([
             'available' => true
         ]);
@@ -52,4 +52,41 @@ class BorrowedController extends Controller
         ]);
         return back()->with('success', "Berhasil Kembalikan Buku");
     }
+
+    //     public function store(Request $request)
+    //     {
+    //         //
+    //     }
+
+    //     /**
+    //      * Display the specified resource.
+    //      */
+    //     public function show(Borrowed $borrowed)
+    //     {
+    //         //
+    //     }
+
+    //     /**
+    //      * Show the form for editing the specified resource.
+    //      */
+    //     public function edit(Borrowed $borrowed)
+    //     {
+    //         //
+    //     }
+
+    //     /**
+    //      * Update the specified resource in storage.
+    //      */
+    //     public function update(Request $request, Borrowed $borrowed)
+    //     {
+    //         //
+    //     }
+
+    //     /**
+    //      * Remove the specified resource from storage.
+    //      */
+    //     public function destroy(Borrowed $borrowed)
+    //     {
+    //         //
+    //     }
 }
