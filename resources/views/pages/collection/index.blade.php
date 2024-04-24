@@ -31,7 +31,7 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td><img src="{{asset('assets/upload/'.$data->books->cover)}}" width="100px" alt=""></td>
-         <td></td>
+         <td>{{$data->books->categoryBook->name}}</td>
           <td>{{$data->books->judul}}</td>
           <td>{{$data->books->penulis}}</td>
           <td>{{$data->books->penerbit}}</td>

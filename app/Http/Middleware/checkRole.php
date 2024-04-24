@@ -13,7 +13,7 @@ class checkRole
         if (in_array(Auth::user()->role, $roles)) {
             return $next($request);
         }
-        return redirect('/error');
+        return redirect()->back();
     }
 }
 

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-    protected $guarded = ['id']; 
+    protected $guarded = ['id'];
 
     public function categoryBook()
     {
@@ -27,18 +27,14 @@ class Book extends Model
         return $this->hasMany(Borrowed::class);
     }
 
-    public function books(){
-        return $this->hasMany(CategoryBook::class, 'category_book_id');
-        }
+    public function ulasans()
+    {
+        return $this->hasMany(Ulasan::class);
+    }
 
-        public function search(){
-            return $this->hasMany(Search::class);
-            }
-        
     public function isAvailableForBorrowing()
     {
         $borrowed = $this->borrowed()->where('status', 'dipinjam')->exists();
-            return !$borrowed;
+        return !$borrowed;
     }
-    
 }

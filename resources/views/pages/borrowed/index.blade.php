@@ -9,12 +9,15 @@
       {{session('success')}}
     </div>
     @endif
-
+    @if(Auth::user()->role != 'user')
+    <a href="{{route('export-borrowed')}}"> <button class="btn btn-info">Unduh Data</button></a>
+    @endif
     <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Cover</th>
+          <th scope="col">User</th>
           <th scope="col">Judul Buku</th>
           <th scope="col">Status</th>
           <th scope="col">Tanggal Pinjam</th>
@@ -27,8 +30,9 @@
         <tr>
           <td scope="row">{{$loop->iteration}}</td>
           <td><img src="{{asset('assets/upload/'.$data->books->cover)}}" width="100px" alt=""></td>
+          <td>{{$data->user->username}}</td>
           <td>{{$data->books->judul}}</td>
-          <td>{{$data->books->status}}</td>
+          <td>{{$data->status}}</td>
           <td>{{$data->tanggal_peminjaman}}</td>
           <td>{{$data->tanggal_pengembalian}}</td>
 

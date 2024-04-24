@@ -6,7 +6,7 @@
   <div class="card-body">
     <a href="{{route('book.create')}}"> <button class="btn btn-primary right mb-3">Add Book</button>
     
-    <!-- <a href="/export-book"> <button class="btn btn-info">Unduh Data</button></a> -->
+    <a href="/export-book"> <button class="btn btn-info">Unduh Data</button></a>
     
     </a>
     @if(Session::get('success'))

@@ -15,9 +15,8 @@ class UlasanController extends Controller
      */
     public function index()
     {
-        //
+       
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -34,22 +33,21 @@ class UlasanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-  public function store(Request $request){
+  public function store(Request $request, $id){
         $request->validate([
             'user_id' => 'required',
-            'book_id' => 'required',
             'ulasan' => 'required',
             'rating' => 'required',
         ]);
 
         Ulasan::create([
             'user_id' => $request->input('user_id'),
-            'book_id' => $request->input('book_id'),
+            'book_id' => $id,
             'ulasan' => $request->input('ulasan'),
             'rating' => $request->input('rating'),
         ]);
 
-        return redirect()->route('ulasan.index')->with('success', 'Ulasan berhasil ditambahkan.');
+        return redirect()->route('show.books')->with('success', 'Ulasan berhasil ditambahkan.');
     }
         // dd($request->all());
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data User</title>
+    <title>Borrowed</title>
     <style>
         table {
             font-family: arial, sans-serif;
@@ -32,22 +32,24 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Nama Lengkap</th>
-                <th>Role</th>
-                <th>Alamat</th>
+                <th>User</th>
+                <th>Judul Buku</th>
+                <th>Status</th>
+                <th>Tanggal Pinjam</th>
+                <th>Tanggal Kembali</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($borrowed as $item)
             <tr <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->username }}</td>
-                <td>{{$item->email}}</td>
-                        <td>{{$item->nama_lengkap}}</td>
-                            <td>{{$item->role}}</td>
-                                <td>{{$item->alamat}}</td>
-                </tr>
+                <td>{{$item->judul}}</td>
+                <td>{{$item->status}}</td>
+                <td>{{$item->tanggal_peminjaman}}</td>
+                <td>{{$item->tanggal_pengembalian}}</td>
+                <td>{{$item->action}}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>

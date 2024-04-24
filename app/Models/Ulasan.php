@@ -14,5 +14,10 @@ class Ulasan extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-}
+    }
+
+    function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }

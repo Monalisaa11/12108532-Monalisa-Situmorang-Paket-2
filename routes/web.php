@@ -27,12 +27,11 @@ Route::get('/', function () {
 
 Route::middleware('isLogin')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'WelcomeDashboard'])->name('dashboard.index');
-    Route::resource('/user-akun', UserController::class);
 
-    
+
+
     Route::middleware('checkRole:admin')->group(function () {
-        Route::resource('/category-book', CategoryBookController::class);
-        Route::resource('/book', BookController::class);
+        Route::resource('/user-akun', UserController::class);
         Route::get('/delete-user/{id}', [AuthController::class, 'userDestroy'])->name('user.destroy');
 
         Route::resource('/ulasan', UlasanController::class);
@@ -41,12 +40,12 @@ Route::middleware('isLogin')->group(function () {
         Route::get('/export-book', [BookController::class, 'exportBook']);
         Route::get('/export-borrowed', [BorrowedController::class, 'exportBorrowed'])->name('export-borrowed');
         Route::get('/export-user', [UserController::class, 'exportUser'])->name('export-user');
-
     });
 
 
     Route::middleware('checkRole:user,admin,petugas')->group(function () {
-    // Route::get('pustaka/{buku}', [PustakaController::class, 'show'])->name('pustaka.show');
+        Route::resource('/category-book', CategoryBookController::class);
+        Route::resource('/book', BookController::class);
         Route::get('/books', [BookController::class, 'showBook'])->name('show.books');
         Route::get('/book/detail/{slug}', [BookController::class, 'detailBook'])->name('borrowed.detail-book');
 
@@ -54,13 +53,19 @@ Route::middleware('isLogin')->group(function () {
         Route::get('/peminjaman', [BorrowedController::class, 'index'])->name('peminjaman.index');
         Route::patch('/peminjaman/{slug}', [BorrowedController::class, 'borrowBook'])->name('borrow.book');
 
+        //return book
         Route::patch('/return/{id}', [BorrowedController::class, 'returnBook'])->name('return.book');
+
+        //koleksi book
         Route::get('/collection', [KoleksiController::class, 'index'])->name('collection.index');
         Route::delete('/koleksi-hapus/{id}', [KoleksiController::class, 'destroy'])->name('koleksiHapus');
         Route::post('/add-collection', [KoleksiController::class, 'store'])->name('koleksi-book.store');
 
-    });
+        //
+        Route::get('/ulasan', [UlasanController::class, 'index'])->name('ulasan.index');
+        Route::post('/add-ulasan/{id}', [UlasanController::class, 'store'])->name('ulasan.store');
 
+    });
 });
 
 Route::middleware(['isGuest'])->group(function () {

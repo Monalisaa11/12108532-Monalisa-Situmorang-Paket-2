@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Borrowed;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class BorrowedController extends Controller
      */
     public function index()
     {
-        $datas = Borrowed::with('books')->where('user_id', Auth::user()->id)->get();
+        $datas = Borrowed::all();
         return view('pages.borrowed.index', compact('datas'));
     }
 
@@ -31,11 +32,10 @@ class BorrowedController extends Controller
             'book_id' => $book->id,
             'user_id' => Auth::user()->id,
             'tanggal_peminjaman' => now()->toDateString(),
-            'tanggal_pengembalian' => now()->toDateString(),
             'status' => 'dipinjam',
         ]);
 
-        return redirect()->back()->with('success', 'Book borrowed successfully.');
+        return redirect('/peminjaman')->with('success', 'Buku Berhasil Dipinjam.');
     }
 
     function returnBook($id)
@@ -51,6 +51,12 @@ class BorrowedController extends Controller
             'status' => 'kembali'
         ]);
         return back()->with('success', "Berhasil Kembalikan Buku");
+    }
+
+      function exportBorrowed(){
+        $data['borrowed'] = Book::all();
+        $pdf = Pdf::loadView('borrowed', $data);
+        return $pdf->download('Borrowed-data.pdf');
     }
 
     //     public function store(Request $request)
